@@ -4,40 +4,47 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.DriveTrain;
 
 /** An example command that uses an example subsystem. */
-public class ExampleCommand extends Command {
+public class EncoderDrive extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final DriveTrain m_subsystem;
+  DriveTrain dt; 
+  double setPoint; 
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public ExampleCommand(DriveTrain subsystem) {
-    m_subsystem = subsystem;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+  public EncoderDrive(DriveTrain dt, double setPoint){
+    this.dt = dt;
+    this.setPoint = setPoint;
+    addRequirements(dt); //prevent conflict with each other 
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    dt.resetEncoders();
+    dt.tankDrive(0, 0);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    dt.tankDrive(0.5, 0.5);
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    dt.tankDrive(0, 0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
-  }
+    if (dt.getMeters() >= setPoint){
+      return true;
+    }
+    else return false;
+    }
 }

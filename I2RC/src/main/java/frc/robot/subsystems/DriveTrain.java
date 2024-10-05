@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,7 +34,6 @@ public class DriveTrain extends SubsystemBase {
     leftDriveTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
     rightDriveTalon.configFactoryDefault();
     rightDriveTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed){
@@ -48,9 +48,19 @@ public class DriveTrain extends SubsystemBase {
   public double getAngle(){
     return NavX.getAngle();
   }
-    
-  
 
+  public double getTicks(){
+    return (leftDriveTalon.getSelectedSensorPosition(0) + rightDriveTalon.getSelectedSensorPosition(0))/2;
+  }
+
+  public double getMeters(){
+    return Units.inchesToMeters(6) * Math.PI / 4096 * getTicks();
+  }
+
+  public void resetEncoders(){
+    leftDriveTalon.setSelectedSensorPosition(0,0,10);
+    rightDriveTalon.setSelectedSensorPosition(0,0,10);
+  }
 
   @Override
   public void periodic() {
