@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
+
 import frc.robot.commands.EncoderDrive;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
