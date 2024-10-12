@@ -67,6 +67,7 @@ public class DriveTrain extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Left Voltage", leftDriveTalon.getMotorOutputPercent());
     SmartDashboard.putNumber("Right Voltage", rightDriveTalon.getMotorOutputPercent());
+    SmartDashboard.putNumber("Meters", getMeters());
     SmartDashboard.putNumber("Angle", getAngle());
   }
 

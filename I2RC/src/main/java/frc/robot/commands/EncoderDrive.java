@@ -9,7 +9,6 @@ import frc.robot.subsystems.DriveTrain;
 
 /** An example command that uses an example subsystem. */
 public class EncoderDrive extends Command {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   DriveTrain dt; 
   double setPoint; 
 
@@ -29,7 +28,7 @@ public class EncoderDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    dt.tankDrive(0.5, 0.5);
+    dt.tankDrive(0.2, 0.2);
 
   }
 
