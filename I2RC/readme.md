@@ -3,7 +3,7 @@ Name: Lucy Tran
 
 Section: I2RC
 
-Week: 2
+Week: 3
 
 
 ## Code
