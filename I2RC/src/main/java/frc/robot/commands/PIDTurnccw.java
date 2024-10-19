@@ -7,7 +7,7 @@ import frc.robot.subsystems.DriveTrain;
 public class PIDTurnccw extends Command{
     DriveTrain dt; 
     double setPointAngle;
-    PIDController pid = new PIDController(0,9, 0, 0);
+    PIDController pid = new PIDController(0.3/90, 0, 0);
     Double output;
 
     public PIDTurnccw(DriveTrain dt, double setPointAngle){
@@ -27,13 +27,8 @@ public class PIDTurnccw extends Command{
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        output = pid.calculate(90);
-        if (output>0){
-            dt.tankDrive(output, -output);
-        }
-        else{
-            dt.tankDrive(-output, output);
-        }
+        output = pid.calculate(dt.getAngle(), setPointAngle);
+        dt.tankDrive(-output, output);
         
     }
     
