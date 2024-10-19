@@ -2,19 +2,21 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
 public class PIDTurnccw extends Command{
     DriveTrain dt; 
     double setPointAngle;
-    PIDController pid = new PIDController(Constants.PIDConstants.PIDConstant, 0, 0);
+    PIDController pid = new PIDController(0,9, 0, 0);
+    Double output;
 
     public PIDTurnccw(DriveTrain dt, double setPointAngle){
         this.dt = dt;
         this.setPointAngle = setPointAngle;
         addRequirements(dt); //prevent conflict with each other 
-        pid.setTolerance();
+        pid.setTolerance(5); 
+
+       
     }
 
     public void initialize() {
@@ -25,7 +27,13 @@ public class PIDTurnccw extends Command{
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double output = pid.calculate(dt.getAngle(), setPointAngle);
+        output = pid.calculate(90);
+        if (output>0){
+            dt.tankDrive(output, -output);
+        }
+        else{
+            dt.tankDrive(-output, output);
+        }
         
     }
     
